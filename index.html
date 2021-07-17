@@ -1,0 +1,46 @@
+<html lang="pt-BR">
+    <head>
+        <title>IA Autocomplete JS</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid main">
+            <div class="row top-container">
+                <div class="col-md-6">
+                    <div style="display: flex;">
+                        <input class="btn btn-default" type="button" value="Treinar" id="btnTrain" onclick="train()">
+                        <input class="btn btn-default" type="button" value="Parar" id="btnStop" onclick="stopTrain()">
+                        <div class="size-label">Tamanho da rede: </div>
+                        <input class="form-control" type="number" id="inputHiddenLayerSize" style="width: 80px" value="10"/>
+                    </div>
+                </div>
+                <div class="col-md-6 predict-status">
+                    Autocompletando...
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 input-container">
+                    <label>Para treino</label>
+                    <textarea id="inputSource" class="form-control code-input"></textarea>
+                </div>
+                <div class="col-md-6 input-container">
+                    <label>Para teste</label>
+                    <div class="test-container">
+                        <textarea id="inputTest" class="form-control code-input"></textarea>
+                        <textarea id="inputPredict" class="form-control code-input" readonly>...</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 input-container log-container">
+                    <label>Log</label>
+                    <textarea id="outputLog" class="form-control log-output" readonly></textarea>
+                </div>
+            </div>
+        </div>
+        <script src="main.js"></script>
+    </body>
+</html>
