@@ -117,11 +117,12 @@ async function fitDataset(model, dataset){
 }
 
 function generateModel(sequenceLength, hiddenLayerSize) {   
-    log('Tamanho dos dados de entrada: ' + (sequenceLength - 1));
+    log('Tamanho dos dados de entrada: ' + (sequenceLength));
     const result = tf.sequential();
-    result.add(tf.layers.inputLayer({inputShape: [sequenceLength - 1]}));
+    result.add(tf.layers.inputLayer({inputShape: [sequenceLength]}));
     result.add(tf.layers.embedding({inputDim: dict.length, outputDim: 4}));
     result.add(tf.layers.flatten());
+    result.add(tf.layers.dropout({rate: 0.2}));
     result.add(tf.layers.dense({units: hiddenLayerSize, activation: 'relu'}));
     result.add(tf.layers.dense({units: dict.length, activation: 'softmax'}));
     result.add(tf.layers.reshape({targetShape: [1, dict.length]}));
@@ -149,12 +150,14 @@ function convertLineToData(line, sequenceLength){
         context += output;
         result.ys.push([[dict.indexOf(output)]]);
     }
+	result.xs.push(generateSequence(context, sequenceLength));
+	result.ys.push([[endIndex]]);
     return result;
 }
 
 function generateSequence(context, sequenceLength){
     const result = context.split('').map(ch=>dict.indexOf(ch))
-    for (let i = result.length; i < sequenceLength - 1; i++){
+    for (let i = result.length; i < sequenceLength; i++){
         result.push(endIndex);
     }
     return result;
